@@ -144,7 +144,7 @@ jobs:
           TEST_FILES_SUFFIX: testvirtualenvs
           CI_PYTHON_VERSION: ${{env.PYTHON_VERSION}}
           CI_DISABLE_AUTO_SELECTION: 1
-        uses: GabrielBB/xvfb-action@v1.5
+        uses: GabrielBB/xvfb-action@v1.6
         with:
           run: npm run testSingleWorkspace:cover
 
@@ -152,7 +152,7 @@ jobs:
         env:
           CI_PYTHON_VERSION: ${{env.PYTHON_VERSION}}
           CI_DISABLE_AUTO_SELECTION: 1
-        uses: GabrielBB/xvfb-action@v1.5
+        uses: GabrielBB/xvfb-action@v1.6
         with:
           run: npm run testSingleWorkspace:cover
 
@@ -161,7 +161,7 @@ jobs:
       #   env:
       #     CI_PYTHON_VERSION: ${{env.PYTHON_VERSION}}
       #     CI_DISABLE_AUTO_SELECTION: 1
-      #   uses: GabrielBB/xvfb-action@v1.5
+      #   uses: GabrielBB/xvfb-action@v1.6
       #   with:
       #     run: npm run testMultiWorkspace:cover
 
@@ -170,7 +170,7 @@ jobs:
       #   env:
       #     CI_PYTHON_VERSION: ${{env.PYTHON_VERSION}}
       #     CI_DISABLE_AUTO_SELECTION: 1
-      #   uses: GabrielBB/xvfb-action@v1.5
+      #   uses: GabrielBB/xvfb-action@v1.6
       #   with:
       #     run: npm run testDebugger:cover
 
