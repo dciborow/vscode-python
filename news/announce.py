@@ -85,10 +85,10 @@ def sections(directory):
 
 def gather(directory):
     """Gather all the entries together."""
-    data = []
-    for section in sections(directory):
-        data.append((section, list(news_entries(section.path))))
-    return data
+    return [
+        (section, list(news_entries(section.path)))
+        for section in sections(directory)
+    ]
 
 
 def entry_markdown(entry):
@@ -110,8 +110,7 @@ def changelog_markdown(data):
     """Generate the Markdown for the release."""
     changelog = []
     for section, entries in data:
-        changelog.append(f"### {section.title}")
-        changelog.append("")
+        changelog.extend((f"### {section.title}", ""))
         changelog.extend(map(entry_markdown, entries))
         changelog.append("")
     return "\n".join(changelog)
@@ -184,11 +183,14 @@ def main(run_type, directory, news_file=None):
 
 if __name__ == "__main__":
     arguments = docopt.docopt(__doc__)
-    for possible_run_type in RunType:
-        if arguments[f"--{possible_run_type.name}"]:
-            run_type = possible_run_type
-            break
-    else:
-        run_type = RunType.interim
+    run_type = next(
+        (
+            possible_run_type
+            for possible_run_type in RunType
+            if arguments[f"--{possible_run_type.name}"]
+        ),
+        RunType.interim,
+    )
+
     directory = arguments["<directory>"] or pathlib.Path(__file__).parent
     main(run_type, directory, arguments["--update"])

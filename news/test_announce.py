@@ -66,7 +66,7 @@ def test_bad_news_entry_file_name(directory):
 def test_news_entry_README_skipping(directory):
     entry = directory / "README.md"
     entry.write_text("Hello, world!")
-    assert len(list(ann.news_entries(directory))) == 0
+    assert not list(ann.news_entries(directory))
 
 
 def test_sections_sorting(directory):
@@ -167,15 +167,8 @@ def test_cleanup(directory, monkeypatch):
 
 
 TITLE = "# Our most excellent changelog"
-OLD_NEWS = f"""\
-## 2018.12.0 (31 Dec 2018)
+OLD_NEWS = """\\\x1f## 2018.12.0 (31 Dec 2018)\x1f\x1fWe did things!\x1f\x1f## 2017.11.16 (16 Nov 2017)\x1f\x1fWe started going stuff.\x1f"""
 
-We did things!
-
-## 2017.11.16 (16 Nov 2017)
-
-We started going stuff.
-"""
 NEW_NEWS = """\
 We fixed all the things!
 
@@ -195,7 +188,7 @@ def test_complete_news():
 
 
 def test_cli():
-    for option in ("--" + opt for opt in ["dry_run", "interim", "final"]):
+    for option in (f"--{opt}" for opt in ["dry_run", "interim", "final"]):
         args = docopt.docopt(ann.__doc__, [option])
         assert args[option]
     args = docopt.docopt(ann.__doc__, ["./news"])

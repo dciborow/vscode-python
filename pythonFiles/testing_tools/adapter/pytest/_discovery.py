@@ -34,20 +34,18 @@ def discover(
         pass
     elif ec != 0:
         print(
-            "equivalent command: {} -m pytest {}".format(
-                sys.executable, util.shlex_unsplit(pytestargs)
-            )
+            f"equivalent command: {sys.executable} -m pytest {util.shlex_unsplit(pytestargs)}"
         )
+
         if hidestdio:
             print(stdio.getvalue(), file=sys.stderr)
             sys.stdout.flush()
-        raise Exception("pytest discovery failed (exit code {})".format(ec))
+        raise Exception(f"pytest discovery failed (exit code {ec})")
     if not _plugin._started:
         print(
-            "equivalent command: {} -m pytest {}".format(
-                sys.executable, util.shlex_unsplit(pytestargs)
-            )
+            f"equivalent command: {sys.executable} -m pytest {util.shlex_unsplit(pytestargs)}"
         )
+
         if hidestdio:
             print(stdio.getvalue(), file=sys.stderr)
             sys.stdout.flush()

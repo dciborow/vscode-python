@@ -70,10 +70,7 @@ class _TestOutput(object):
 
     @property
     def name(self):
-        if self.is_stdout:
-            return "<stdout>"
-        else:
-            return "<stderr>"
+        return "<stdout>" if self.is_stdout else "<stderr>"
 
     def __getattr__(self, name):
         return getattr(self.old_out, name)
@@ -384,7 +381,7 @@ def main():
         if cov is not None:
             cov.stop()
             cov.save()
-            cov.xml_report(outfile=opts.coverage + ".xml", omit=__file__)
+            cov.xml_report(outfile=f'{opts.coverage}.xml', omit=__file__)
         if _channel is not None:
             _channel.send_event(name="done")
             _channel.socket.close()
